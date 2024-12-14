@@ -3,6 +3,8 @@ import os
 from PIL import Image
 import numpy as np
 import config
+from torchvision.utils import save_image
+
 
 class MyImageFolder(Dataset):
     def __init__(self, root_dir):
@@ -37,12 +39,12 @@ class MyImageFolder(Dataset):
         return high_res, low_res
 
 def test():
-    dataset = MyImageFolder(config.TRAIN_DIR)
-    loader = DataLoader(dataset, batch_size=1, num_workers=config.NUM_WORKERS)
-    
-    for high_res, low_res in loader:
-        print(high_res.shape, low_res.shape)
-        break
+    dataset = MyImageFolder("dataset/raw_data")
+    loader = DataLoader(dataset, batch_size=1, shuffle=True)
+    for x, y in loader:
+        save_image(x, "high_res.png")
+        save_image(y, "low_res.png")
+        
 
 if __name__ == "__main__":
     test()

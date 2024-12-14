@@ -6,6 +6,9 @@ import config
 import torch.nn as nn
 import torch.optim as optim
 import torchvision.transforms as transforms
+import numpy as np
+import random
+from random import choice
 
 
 def gradient_penalty(critic , real , fake, device="cpu"):
@@ -47,12 +50,25 @@ def load_checkpoint(checkpoint_file, model, optimizer, lr):
 
 def plot_examples(low_res_folder, gen):
     files = os.listdir(low_res_folder)
+    file = np.random.choice(files)
     
     gen.eval()
     
-    for file in files:
-        image = Image.open(os.path.join(low_res_folder, file))
-        with torch.no_grad():
-            upscaled_image = gen(transforms.ToTensor()(image).unsqueeze(0).to(config.DEVICE))
-        save_image(upscaled_image, f"upscaled_{file}")
+    image = Image.open(os.path.join(low_res_folder, file)).convert("RGB")  # Convert image to RGB
+    with torch.no_grad():
+        input_tensor = config.test_transform(image=np.asarray(image))["image"].unsqueeze(0).to(config.DEVICE)
+        upscaled_img = gen(input_tensor)
+    
+    # Normalize the output to [0, 1] range
+    upscaled_img = (upscaled_img * 0.5) + 0.5
+    
+    
+    # Save the images
+    image_tensor = config.test_transform(image=np.asarray(image))["image"]
+    index = os.listdir("saved")
+    idx = len(index)
+    
+    save_image(image_tensor, f"saved/{idx}.png")
+    save_image(upscaled_img, f"saved/{idx + 1}.png")
+    
     gen.train()

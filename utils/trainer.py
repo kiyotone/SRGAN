@@ -23,7 +23,7 @@ torch.backends.cudnn.benchmark = True
 def train_fn(loader, disc, gen, opt_gen, opt_disc, mse, bce, vgg_loss):
     loop = tqdm(loader, leave=True)
 
-    for idx, (low_res, high_res) in enumerate(loop):
+    for idx, (high_res, low_res) in enumerate(loop):
         high_res = high_res.to(config.DEVICE)
         low_res = low_res.to(config.DEVICE)
         
@@ -51,13 +51,16 @@ def train_fn(loader, disc, gen, opt_gen, opt_disc, mse, bce, vgg_loss):
         opt_gen.zero_grad()
         gen_loss.backward()
         opt_gen.step()
-
+    
         if idx % 200 == 0:
-            plot_examples("test_images/", gen)
+            plot_examples("dataset/raw_data/low_res", gen)
+            
+            
+
 
 
 def main():
-    dataset = MyImageFolder(root_dir="dataset/check")
+    dataset = MyImageFolder(root_dir="dataset/train")
     loader = DataLoader(
         dataset,
         batch_size=config.BATCH_SIZE,
@@ -65,8 +68,11 @@ def main():
         pin_memory=True,
         num_workers=config.NUM_WORKERS,
     )
-    gen = Generator(in_channels=3).to(config.DEVICE)
-    disc = Discriminator().to(config.DEVICE)
+    
+    
+    
+    gen = Generator(in_channels=config.IMG_CHANNELS).to(config.DEVICE)
+    disc = Discriminator(in_channels=config.IMG_CHANNELS).to(config.DEVICE)
     opt_gen = optim.Adam(gen.parameters(), lr=config.LEARNING_RATE, betas=(0.9, 0.999))
     opt_disc = optim.Adam(disc.parameters(), lr=config.LEARNING_RATE, betas=(0.9, 0.999))
     mse = nn.MSELoss()
@@ -86,11 +92,17 @@ def main():
 
     for epoch in range(config.NUM_EPOCHS):
         train_fn(loader, disc, gen, opt_gen, opt_disc, mse, bce, vgg_loss)
-
         if config.SAVE_MODEL:
             save_checkpoint(gen, opt_gen, filename=config.CHECKPOINT_GEN)
             save_checkpoint(disc, opt_disc, filename=config.CHECKPOINT_DISC)
 
 
+def test():
+    gen = Generator(in_channels=3, num_channels=64, num_blocks=16).to(config.DEVICE)
+    opt_gen = optim.Adam(gen.parameters(), lr=config.LEARNING_RATE, betas=(0.9, 0.999))
+    load_checkpoint("gen.pth.tar", gen, opt_gen, config.LEARNING_RATE)
+    plot_examples("dataset/raw_data/low_res", gen)
+
 if __name__ == "__main__":
     main()
+    #test()
