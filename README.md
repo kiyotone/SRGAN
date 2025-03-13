@@ -8,20 +8,25 @@ This project implements an SRGAN (Super-Resolution Generative Adversarial Networ
 File Structure:
 ---------------
 SRGAN/
-│— models/                  # Directory containing model implementations
-│   │— __init__.py          # Python init file
-│   │— discriminator.py     # Discriminator model architecture
-│   │— generator.py         # Generator model architecture
-│   │— discriminator.pth    # Pre-trained discriminator weights (if available)
-│   │— generator.pth        # Pre-trained generator weights (if available)
+│── models/                  # Directory containing model implementations
+│   │── __init__.py          # Python init file
+│   │── discriminator.py     # Discriminator model architecture
+│   │── generator.py         # Generator model architecture
+│   │── discriminator.pth    # Pre-trained discriminator weights (if available)
+│   │── generator.pth        # Pre-trained generator weights (if available)
 │
-│— out/                     # Directory for storing output images
-│— utils/                   # Utility functions (e.g., image processing)
-│— dataset.py               # Dataset loading and preprocessing
-│— loss.py                  # Loss functions used in training (e.g., MSE, Perceptual Loss)
-│— train.ipynb              # Jupyter Notebook for training and evaluation
-│— requirements.txt         # Python dependencies
-│— .gitignore               # Files to ignore in version control
+│── out/                     # Directory for storing output images
+│── utils/                   # Utility functions (e.g., image processing)
+│── dataset.py               # Dataset loading and preprocessing
+│── loss.py                  # Loss functions used in training (e.g., MSE, Perceptual Loss)
+│── train.ipynb              # Jupyter Notebook for training and evaluation
+│── requirements.txt         # Python dependencies
+│── .gitignore               # Files to ignore in version control
+
+Setup Instructions:
+-------------------
+1. Clone the repository:
+
 
 Setup Instructions:
 -------------------
