@@ -1,49 +1,50 @@
-SRGAN - Super-Resolution GAN using PyTorch
-==========================================
+# SRGAN - Super-Resolution Generative Adversarial Network
 
-Project Description:
----------------------
-This project implements an SRGAN (Super-Resolution Generative Adversarial Network) using PyTorch. The model enhances low-resolution images to high-resolution ones by training a generator and discriminator in an adversarial framework.
+## Overview
+This project implements a Super-Resolution Generative Adversarial Network (SRGAN) using PyTorch. SRGAN is used to generate high-resolution (HR) images from low-resolution (LR) images, enhancing image quality with perceptual and adversarial losses.
 
-File Structure:
----------------
-SRGAN/
-│── models/                  # Directory containing model implementations
-│   │── __init__.py          # Python init file
-│   │── discriminator.py     # Discriminator model architecture
-│   │── generator.py         # Generator model architecture
-│   │── discriminator.pth    # Pre-trained discriminator weights (if available)
-│   │── generator.pth        # Pre-trained generator weights (if available)
+## File Structure
+```
+SRGAN_Project/
+│── models/
+│   │── __init__.py
+│   │── discriminator.pth
+│   │── discriminator.py
+│   │── generator.pth
+│   │── generator.py
 │
-│── out/                     # Directory for storing output images
-│── utils/                   # Utility functions (e.g., image processing)
-│── dataset.py               # Dataset loading and preprocessing
-│── loss.py                  # Loss functions used in training (e.g., MSE, Perceptual Loss)
-│── train.ipynb              # Jupyter Notebook for training and evaluation
-│── requirements.txt         # Python dependencies
-│── .gitignore               # Files to ignore in version control
+│── out/
+│
+│── utils/
+│
+│── .gitignore
+│── dataset.py
+│── loss.py
+│── requirements.txt
+│── train.ipynb
+```
 
-Setup Instructions:
--------------------
-1. Clone the repository:
+## Requirements
+To install the necessary dependencies, run:
+```
+pip install -r requirements.txt
+```
 
+## Training
+Run the following command to train the SRGAN model:
+```
+python train.ipynb
+```
 
-Setup Instructions:
--------------------
-1. Clone the repository:
-   ```
-   git clone https://github.com/your-repo/srgan.git
-   cd srgan
-   ```
+## Models
+- **Generator**: Generates high-resolution images from low-resolution inputs.
+- **Discriminator**: Differentiates between real high-resolution images and generated images.
 
-2. Create a virtual environment (optional but recommended):
-   ```
-   python -m venv venv
-   source venv/bin/activate  (Linux/macOS)
-   venv\Scripts\activate     (Windows)
-   ```
+## Dataset
+Modify `dataset.py` to load your custom dataset.
 
-3. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+## Output
+Generated images and model checkpoints are saved in the `out/` directory.
+
+## Contact
+For any questions, feel free to reach out!
