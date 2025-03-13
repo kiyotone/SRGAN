@@ -31,10 +31,7 @@ pip install -r requirements.txt
 ```
 
 ## Training
-Run the following command to train the SRGAN model:
-```
-python train.ipynb
-```
+Run the train.ipynb notebook to train the SRGAN model:
 
 ## Models
 - **Generator**: Generates high-resolution images from low-resolution inputs.
